@@ -6,5 +6,5 @@ This is a small POC developed using Proton QPID:
 The code connects to and sends messages to Amazon Active MQ broker. You can modify the broker URL, username, password and queue name in the dockerfile which are set as the enviroment variables. 
 
 Build and run code:
-$ docker built . --tag proton:latest
+$ docker build . --tag proton:latest
 $ docker run proton
