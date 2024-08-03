@@ -24,15 +24,9 @@ class Send(MessagingHandler):
     def on_accepted(self, event):
         self.confirmed += 1
         if self.confirmed == self.total:
-            print("all messages confirmed")
+            print(str(self.confirmed)+" messages confirmed")
             event.connection.close()
 
-
-    def on_accepted(self, event):
-        self.confirmed += 1
-        if self.confirmed == self.total:
-            print("all messages confirmed")
-            event.connection.close()
 
     def on_disconnected(self, event):
         self.sent = self.confirmed
@@ -42,15 +36,20 @@ username=os.getenv("user");
 password=os.getenv("pass");
 host=os.getenv("host");
 queue=os.getenv("queue");
-parser = optparse.OptionParser(usage="usage: %prog [options]",
-                        description="Send messages to the supplied address.")
-parser.add_option("-a", "--address", default="amqps://"+username+":"+password+"@"+host+":5671/"+queue,
-            help="address to which messages are sent (default %default)")
-parser.add_option("-m", "--messages", type="int", default=100,
-            help="number of messages to send (default %default)")
-opts, args = parser.parse_args()
+
+if(username!=None and password!=None and host!=None and queue!=None):
+    address="amqps://"+username+":"+password+"@"+host+":5671/"+queue
+else:
+    print("EXITING! Failed to send message. Please provide host, username, password and queue name")
+    exit()
+try:
+    messageCount=int(os.getenv("messageCount"))
+except:
+    messageCount=messages=100
+if messageCount<=0:
+    exit()
 
 try:
-    Container(Send(opts.address, opts.messages)).run()
+    Container(Send(address, messageCount)).run()
 except KeyboardInterrupt:
     pass
