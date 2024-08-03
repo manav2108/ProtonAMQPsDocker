@@ -9,4 +9,4 @@ The code connects to and sends messages to Amazon Active MQ broker. You can modi
 
 Build and run code:
 $ docker build . --tag proton:latest
-$ docker run -e host=b-f2b50781-614a-41b0-b376-9d9f2d2a02d2-1.mq.ap-south-1.amazonaws.com -e user=username -e pass=password1234 -e queue=queueName -e messageCount=10000 proton 
+$ docker run -e host=b-xxxx-1.mq.ap-south-1.amazonaws.com -e user=username -e pass=password -e queue=queueName -e messageCount=10000 proton 
